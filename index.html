@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>당신 집에서 잘 수 있나요? | Travel Vibe Test</title>
+    <title>당신 집에서 잘 수 있나요? | 나는 어떤 유형의 여행자일까</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -86,6 +86,13 @@
         const { useState, useEffect, useRef } = React;
 
         // --- Data (15 Questions) ---
+        // Reordered as requested:
+        // 1~10: Same
+        // 11: Old Q13 (Souvenir)
+        // 12: Old Q12 (Bus - Same pos)
+        // 13: Old Q14 (Last Night)
+        // 14: Old Q11 (Partner)
+        // 15: Same
         const questions = [
             {
                 id: 1,
@@ -171,7 +178,7 @@
                 id: 9,
                 question: "내일 일정 짤 시간! 어떤 방식이 좋아?",
                 options: [
-                    { text: "10:00 기상, 11:00 브런치... 분 단위 계획표!", traits: { J: 2 } },
+                    { text: "10:00 기상, 11:00 브런치... 시간 단위 계획표!", traits: { J: 2 } }, // Modified
                     { text: "일단 큰 틀만 정해 두자", traits: { P: 1 } },
                     { text: "그날 날씨랑 기분 보고 정하면 안 돼?", traits: { P: 2 } },
                     { text: "맛집, 교통편, 동선 효율성 체크가 최우선!", traits: { T: 1, J: 1 } }
@@ -181,34 +188,14 @@
                 id: 10,
                 question: "여행 중 예상치 못한 비가 쏟아진다! ☔️",
                 options: [
-                    { text: "짜증 나... 옷 다 젖을 것 같은데? 우산 파는 곳 검색", traits: { S: 1, T: 1 } },
+                    { text: "짜증 나... 옷 다 젖을 것 같은데? 우산 파는 곳 찾기", traits: { S: 1, T: 1 } }, // Modified
                     { text: "비 오는 리스본도 운치 있다! 빗소리 감상 🎧", traits: { N: 1, F: 1 } },
                     { text: "실내 일정으로 플랜 B 가동! 당황하지 않는다", traits: { J: 2 } },
                     { text: "비 맞고 뛰어! 영화의 한 장면처럼 놀아 보자!", traits: { P: 1, E: 1 } }
                 ]
             },
             {
-                id: 11,
-                question: "마지막 날, '당신 집에서 잘 수 있나요?' 질문할 상대를 정해야 한다.",
-                options: [
-                    { text: "가장 마음이 통하고 정서적으로 의지했던 사람", traits: { F: 2 } },
-                    { text: "배울 점이 많고 대화가 지적으로 통했던 사람", traits: { T: 2 } },
-                    { text: "제일 재밌고 같이 있으면 시간 가는 줄 모르는 사람", traits: { E: 1, P: 1 } },
-                    { text: "묵묵히 챙겨줬던 고마운 사람", traits: { I: 1, S: 1 } }
-                ]
-            },
-            {
-                id: 12,
-                question: "버스 창밖으로 낯선 풍경이 스쳐 지나간다. 당신의 생각은?",
-                options: [
-                    { text: "저 간판 글씨체 특이하네. 저 사람들은 뭘 기다리는 거지?", traits: { S: 2 } },
-                    { text: "이 버스는 어디로 가는 걸까... 마치 영화 속 한 장면 같아", traits: { N: 2 } },
-                    { text: "다음 정거장은 어디지? 버스 노선 확인", traits: { S: 1, J: 1 } },
-                    { text: "이 도시에 얽힌 이야기가 있을 것만 같아...", traits: { N: 1, F: 1 } }
-                ]
-            },
-            {
-                id: 13,
+                id: 11, // Was 13
                 question: "친구가 여행 기념품으로 뭘 살지 고민한다. 나의 조언은?",
                 options: [
                     { text: "가격 대비 퀄리티는 이게 제일 낫네 이거 사", traits: { T: 2 } },
@@ -218,13 +205,33 @@
                 ]
             },
             {
-                id: 14,
+                id: 12, // Same pos
+                question: "버스 창밖으로 낯선 풍경이 스쳐 지나간다. 당신의 생각은?",
+                options: [
+                    { text: "저 간판 글씨체 특이하네 저 사람들은 뭘 기다리는 거지?", traits: { S: 2 } }, // Removed dot
+                    { text: "이 버스는 어디로 가는 걸까... 마치 영화 속 한 장면 같아", traits: { N: 2 } },
+                    { text: "다음 정거장은 어디지? 버스 노선 확인", traits: { S: 1, J: 1 } },
+                    { text: "이 도시에 얽힌 이야기가 있을 것만 같아...", traits: { N: 1, F: 1 } }
+                ]
+            },
+            {
+                id: 13, // Was 14
                 question: "여행지에서의 마지막 밤, 아쉬움을 달래는 방법은?",
                 options: [
                     { text: "이대로 잠들 순 없어! 펍이나 라운지 가서 끝까지 놀자!", traits: { E: 2 } },
                     { text: "숙소 테라스에서 야경을 보며 조용히 맥주 한 잔", traits: { I: 2 } },
                     { text: "오늘 만난 사람들과 연락처 교환하고 인스타 맞팔!", traits: { E: 1, F: 1 } },
                     { text: "찍은 사진들을 정리하며 일기장에 소감을 남긴다", traits: { I: 1, J: 1 } }
+                ]
+            },
+            {
+                id: 14, // Was 11
+                question: "마지막 날, '당신 집에서 잘 수 있나요?' 질문할 상대를 정해야 한다.",
+                options: [
+                    { text: "가장 마음이 통하고 정서적으로 의지했던 사람", traits: { F: 2 } },
+                    { text: "배울 점이 많고 대화가 지적으로 통했던 사람", traits: { T: 2 } },
+                    { text: "제일 재미있고 같이 있으면 시간 가는 줄 모르는 사람", traits: { E: 1, P: 1 } }, // Modified
+                    { text: "묵묵히 챙겨줬던 고마운 사람", traits: { I: 1, S: 1 } }
                 ]
             },
             {
@@ -279,7 +286,7 @@
             },
             'ESTJ': {
                 name: "최재경",
-                title: "믿고 따르는 든든한 대장님 🛡️",
+                title: "믿고 따르는 든든한 리더 🫡",
                 tags: ["#책임감", "#현실적", "#해결사", "#어른미", "#리더십", "#계획적", "#솔선수범", "#츤데레"],
                 desc: "어떤 돌발 상황이 와도 당황하지 않고 침착하게 문제를 해결하는 리더 스타일입니다. 효율적인 동선과 철저한 계획으로 팀을 이끄는 든든한 버팀목이죠. 겉으로는 무뚝뚝해 보일 수 있지만, 사실은 그 누구보다 팀원들에 대한 깊은 책임감과 애정을 가지고 있습니다.",
                 detail: "힘든 일은 남에게 미루지 않고 가장 먼저 나서서 처리하는 솔선수범형입니다. 감정적인 위로보다는 실질적인 해결책을 제시하는 편이지만, 행동 하나하나에 묻어나는 묵직한 배려가 매력 포인트입니다. 믿고 의지할 수 있는 어른스러운 여행자입니다.",
@@ -287,7 +294,7 @@
                 color: "bg-blue-50 text-blue-900 border-blue-200",
                 btnColor: "bg-blue-400 hover:bg-blue-500",
                 pointColor: "text-blue-500",
-                img: "💼"
+                img: "🫡"
             },
             'ESFJ': {
                 name: "니코",
@@ -608,13 +615,13 @@
                                     ))}
                                 </div>
 
-                                {/* Description */}
+                                {/* Description - Modified text alignment back to left with tracking-tight */}
                                 <div className="space-y-6 mb-2">
                                     <div>
                                         <h3 className="font-bold text-slate-800 mb-2 text-sm flex items-center gap-2">
                                             <span className="text-base">👀</span> 성격 분석
                                         </h3>
-                                        <p className="text-slate-600 text-sm leading-relaxed text-left break-keep font-normal border-l-2 border-slate-200 pl-3">
+                                        <p className="text-slate-600 text-sm leading-relaxed text-left break-keep tracking-tight font-normal border-l-2 border-slate-200 pl-3">
                                             {data.desc}
                                         </p>
                                     </div>
@@ -623,7 +630,7 @@
                                         <h3 className="font-bold text-slate-800 mb-2 text-sm flex items-center gap-2">
                                             <span className="text-base">🎒</span> 여행 스타일
                                         </h3>
-                                        <p className="text-slate-600 text-sm leading-relaxed text-left break-keep font-normal border-l-2 border-slate-200 pl-3">
+                                        <p className="text-slate-600 text-sm leading-relaxed text-left break-keep tracking-tight font-normal border-l-2 border-slate-200 pl-3">
                                             {data.detail}
                                         </p>
                                     </div>
