@@ -16,14 +16,12 @@
         body {
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
             background-color: #fff;
-            /* Prevent pull-to-refresh on mobile */
             overscroll-behavior: none; 
         }
         .handwriting {
             font-family: 'Gaegu', cursive;
         }
         
-        /* Soft Gradient Animation */
         @keyframes soft-gradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -35,7 +33,6 @@
             animation: soft-gradient 20s ease infinite;
         }
 
-        /* Animations */
         @keyframes slideUp {
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -44,55 +41,31 @@
             animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Ticket Perforation */
-        .ticket-dots {
-            background-image: radial-gradient(circle, transparent 6px, #fff 6px);
-            background-size: 20px 20px;
-            background-position: -10px -10px;
-        }
-
-        /* Custom Scrollbar */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Mobile Hover Fix - Sky-Pink Gradient Theme */
         @media (hover: hover) {
             .hover-action:hover {
-                /* sky-50 to pink-50 gradient */
                 background-image: linear-gradient(to right, #f0f9ff, #fdf4ff);
-                border-color: #7dd3fc; /* sky-300 */
+                border-color: #7dd3fc; 
                 transform: translateY(-2px);
             }
         }
         .hover-action:active {
-            /* sky-100 to pink-100 gradient */
             background-image: linear-gradient(to right, #e0f2fe, #fae8ff); 
-            border-color: #7dd3fc; /* sky-300 */
+            border-color: #7dd3fc; 
             transform: scale(0.99);
         }
     </style>
 </head>
-<!-- Centering Fix: flex justify-center items-center ensures the card is centered on large screens -->
 <body class="h-[100dvh] w-full flex justify-center items-center relative text-slate-800 animate-gradient-bg overflow-hidden">
     
-    <!-- Main Container 
-         Mobile: w-full h-full (Full Screen)
-         Web (sm): max-w-[420px] h-[85vh] (Centered Card Look)
-         Added sm:border-white/50 for better definition on web
-    -->
     <div id="root" class="relative z-10 w-full max-w-[420px] h-full sm:h-[85vh] sm:max-h-[850px] sm:rounded-[32px] bg-white/50 backdrop-blur-xl overflow-hidden flex flex-col sm:border-[8px] sm:border-white/50 sm:shadow-2xl transition-all duration-300"></div>
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
         // --- Data (15 Questions) ---
-        // Reordered as requested:
-        // 1~10: Same
-        // 11: Old Q13 (Souvenir)
-        // 12: Old Q12 (Bus - Same pos)
-        // 13: Old Q14 (Last Night)
-        // 14: Old Q11 (Partner)
-        // 15: Same
         const questions = [
             {
                 id: 1,
@@ -178,7 +151,7 @@
                 id: 9,
                 question: "내일 일정 짤 시간! 어떤 방식이 좋아?",
                 options: [
-                    { text: "10:00 기상, 11:00 브런치... 시간 단위 계획표!", traits: { J: 2 } }, // Modified
+                    { text: "10:00 기상, 11:00 브런치... 시간 단위 계획표!", traits: { J: 2 } },
                     { text: "일단 큰 틀만 정해 두자", traits: { P: 1 } },
                     { text: "그날 날씨랑 기분 보고 정하면 안 돼?", traits: { P: 2 } },
                     { text: "맛집, 교통편, 동선 효율성 체크가 최우선!", traits: { T: 1, J: 1 } }
@@ -188,14 +161,14 @@
                 id: 10,
                 question: "여행 중 예상치 못한 비가 쏟아진다! ☔️",
                 options: [
-                    { text: "짜증 나... 옷 다 젖을 것 같은데? 우산 파는 곳 찾기", traits: { S: 1, T: 1 } }, // Modified
+                    { text: "짜증 나... 옷 다 젖을 것 같은데? 우산 파는 곳 찾기", traits: { S: 1, T: 1 } },
                     { text: "비 오는 여행지도 운치 있다! 빗소리 감상 🎧", traits: { N: 1, F: 1 } },
                     { text: "실내 일정으로 플랜 B 가동! 당황하지 않는다", traits: { J: 2 } },
                     { text: "비 맞고 뛰어! 영화의 한 장면처럼 놀아 보자!", traits: { P: 1, E: 1 } }
                 ]
             },
             {
-                id: 11, // Was 13
+                id: 11,
                 question: "친구가 여행 기념품으로 뭘 살지 고민한다. 나의 조언은?",
                 options: [
                     { text: "가격 대비 퀄리티는 이게 제일 낫네 이거 사", traits: { T: 2 } },
@@ -205,17 +178,17 @@
                 ]
             },
             {
-                id: 12, // Same pos
+                id: 12,
                 question: "버스 창밖으로 낯선 풍경이 스쳐 지나간다. 당신의 생각은?",
                 options: [
-                    { text: "저 간판 글씨체 특이하네 저 사람들은 뭘 기다리는 거지?", traits: { S: 2 } }, // Removed dot
+                    { text: "저 간판 글씨체 특이하네 저 사람들은 뭘 기다리는 거지?", traits: { S: 2 } },
                     { text: "이 버스는 어디로 가는 걸까... 마치 영화 속 한 장면 같아", traits: { N: 2 } },
                     { text: "다음 정거장은 어디지? 버스 노선 확인", traits: { S: 1, J: 1 } },
                     { text: "이 도시에 얽힌 이야기가 있을 것만 같아...", traits: { N: 1, F: 1 } }
                 ]
             },
             {
-                id: 13, // Was 14
+                id: 13,
                 question: "여행지에서의 마지막 밤, 아쉬움을 달래는 방법은?",
                 options: [
                     { text: "이대로 잠들 순 없어! 펍이나 라운지 가서 끝까지 놀자!", traits: { E: 2 } },
@@ -225,12 +198,12 @@
                 ]
             },
             {
-                id: 14, // Was 11
+                id: 14,
                 question: "마지막 날, '당신 집에서 잘 수 있나요?' 질문할 상대를 정해야 한다.",
                 options: [
                     { text: "가장 마음이 통하고 정서적으로 의지했던 사람", traits: { F: 2 } },
                     { text: "배울 점이 많고 대화가 지적으로 통했던 사람", traits: { T: 2 } },
-                    { text: "제일 재미있고 같이 있으면 시간 가는 줄 모르는 사람", traits: { E: 1, P: 1 } }, // Modified
+                    { text: "제일 재미있고 같이 있으면 시간 가는 줄 모르는 사람", traits: { E: 1, P: 1 } },
                     { text: "묵묵히 챙겨줬던 고마운 사람", traits: { I: 1, S: 1 } }
                 ]
             },
@@ -246,103 +219,115 @@
             }
         ];
 
+        // --- Character Data: 사진을 넣고 싶으면 profileUrl에 링크를 넣으세요 ---
         const resultTypes = {
             'INFP': {
                 name: "정재현",
                 title: "비 내리는 창가의 낭만 고양이 🐱",
                 tags: ["#섬세함", "#분위기장인", "#반전매력", "#음악추천", "#사색즐김", "#감성충전", "#느긋함", "#배려왕"],
-                desc: "당신은 겉으로는 차분하고 조용해 보이지만, 그 내면에는 누구보다 깊고 거대한 우주를 품고 있는 사람입니다. 낯선 여행지에서 마주하는 찰나의 감정과 분위기를 소중히 여기며, 그것을 자신만의 방식으로 오롯이 흡수합니다. 말로 다 표현하지 않아도, 특유의 다정한 눈빛과 세심한 배려로 주변 사람들을 편안하게 만드는 능력이 있습니다.",
+                desc: "당신은 겉으로는 차분하고 조용해 보이지만, 그 내면에는 누구보다 깊고 거대한 우주를 품고 있는 사람입니다. 낯선 여행지에서 마주하는 찰나의 감정과 분위기를 소중히 여기며, 그것을 자신만의 방식으로 오롯이 흡수합니다.",
                 detail: "남들이 무심코 지나치는 골목길의 낡은 간판이나 빗소리에서 아름다움을 발견하는 타입입니다. 시끄러운 파티보다는 마음이 맞는 소수의 사람들과 나누는 깊은 대화를 선호하며, 때로는 혼자만의 시간을 통해 에너지를 충전하는 것이 필요합니다.",
                 partner: "마크",
                 color: "bg-sky-50 text-sky-900 border-sky-200",
                 btnColor: "bg-sky-400 hover:bg-sky-500",
                 pointColor: "text-sky-500",
                 img: "🍑",
+                // ▼▼▼ 여기에 재현 사진 링크를 넣으세요 (따옴표 안에) ▼▼▼
+                profileUrl: "https://i.pinimg.com/1200x/0b/d0/09/0bd0096471c94f9369b77c7eed605832.jpg",
                 bgImg: "https://file.notion.so/f/f/d7730641-4164-476a-8752-577644429a34/82904450-4655-4775-8629-23016825501c/8989dbd24565d7bcb7ca80786135e842.jpg?id=28077081-6715-4523-a05e-556768781014&table=block&spaceId=d7730641-4164-476a-8752-577644429a34&expirationTimestamp=1732471200000&signature=_76515107864407544615452001242504452501452314823522315247663146563004536131215516"
             },
             'ENFP': {
                 name: "마크",
                 title: "세상 무해한 인간 비타민 🍋",
                 tags: ["#호기심천국", "#리액션부자", "#솔직함", "#사랑둥이", "#긍정에너지", "#무해함", "#엉뚱함", "#분위기메이커"],
-                desc: "존재 자체만으로도 주변을 환하게 밝히는 형광등 같은 사람! 새로운 세상에 대한 호기심이 가득하고, 매 순간 감정을 숨기지 못해 얼굴에 그대로 드러나는 투명하고 순수한 영혼의 소유자입니다. 서툴러도 매사에 진심인 당신의 모습은 사람들의 마음을 무장해제 시킵니다.",
-                detail: "길을 잃거나 실수를 해도 \"이것도 다 추억이지!\"라며 긍정적으로 웃어넘기는 회복탄력성을 가졌습니다. 편견 없이 사람들에게 다가가는 당신은 어디서나 환영받는 최고의 여행 메이트입니다. 즉흥적인 상황을 즐기며, 우연히 마주친 인연을 소중히 여깁니다.",
+                desc: "존재 자체만으로도 주변을 환하게 밝히는 형광등 같은 사람! 새로운 세상에 대한 호기심이 가득하고, 매 순간 감정을 숨기지 못해 얼굴에 그대로 드러나는 투명하고 순수한 영혼의 소유자입니다.",
+                detail: "길을 잃거나 실수를 해도 \"이것도 다 추억이지!\"라며 긍정적으로 웃어넘기는 회복탄력성을 가졌습니다. 편견 없이 사람들에게 다가가는 당신은 어디서나 환영받는 최고의 여행 메이트입니다.",
                 partner: "정재현",
                 color: "bg-green-50 text-green-900 border-green-200",
                 btnColor: "bg-green-400 hover:bg-green-500",
                 pointColor: "text-green-500",
-                img: "🐯"
+                img: "🐯",
+                // ▼▼▼ 여기에 마크 사진 링크를 넣으세요 ▼▼▼
+                profileUrl: "https://i.pinimg.com/736x/a3/40/53/a34053b2412e794490cd884568682127.jpg" 
+                // (지금은 없는 링크입니다. 본인 링크로 교체하세요!)
             },
             'ISFJ': {
                 name: "채지원",
                 title: "폭신폭신 다정한 안식처 ☁️",
                 tags: ["#경청왕", "#내유외강", "#챙김러", "#따뜻함", "#안정감", "#세심함", "#평화주의자", "#헌신"],
-                desc: "부드러워 보이지만 속은 누구보다 단단한 외유내강형입니다. 소란스러운 상황에서도 중심을 잃지 않고 차분함을 유지하며, 뒤에서 묵묵히 동료들을 챙겨주는 팀의 숨은 수호천사입니다. 타인의 감정을 예민하게 캐치하고 배려하는 당신 덕분에 여행은 언제나 평화롭습니다.",
+                desc: "부드러워 보이지만 속은 누구보다 단단한 외유내강형입니다. 소란스러운 상황에서도 중심을 잃지 않고 차분함을 유지하며, 뒤에서 묵묵히 동료들을 챙겨주는 팀의 숨은 수호천사입니다.",
                 detail: "오래된 물건이나 익숙한 인연을 소중히 여깁니다. 나서서 주도하기보다는 한 발자국 뒤에서 따뜻한 미소로 이야기를 들어주는 역할을 자처합니다. 꼼꼼하게 주변을 살피며 모두가 편안한지 확인하는 세심함을 가지고 있습니다.",
                 partner: "최재경",
                 color: "bg-yellow-50 text-yellow-900 border-yellow-200",
                 btnColor: "bg-yellow-400 hover:bg-yellow-500",
                 pointColor: "text-yellow-500",
-                img: "✒️"
+                img: "✒️",
+                profileUrl: "" // 사진을 쓰고 싶으면 여기에 링크 입력
             },
             'ESTJ': {
                 name: "최재경",
                 title: "믿고 따르는 든든한 리더 🫡",
                 tags: ["#책임감", "#현실적", "#해결사", "#어른미", "#리더십", "#계획적", "#솔선수범", "#츤데레"],
-                desc: "어떤 돌발 상황이 와도 당황하지 않고 침착하게 문제를 해결하는 리더 스타일입니다. 효율적인 동선과 철저한 계획으로 팀을 이끄는 든든한 버팀목이죠. 겉으로는 무뚝뚝해 보일 수 있지만, 사실은 그 누구보다 팀원들에 대한 깊은 책임감과 애정을 가지고 있습니다.",
-                detail: "힘든 일은 남에게 미루지 않고 가장 먼저 나서서 처리하는 솔선수범형입니다. 감정적인 위로보다는 실질적인 해결책을 제시하는 편이지만, 행동 하나하나에 묻어나는 묵직한 배려가 매력 포인트입니다. 믿고 의지할 수 있는 어른스러운 여행자입니다.",
+                desc: "어떤 돌발 상황이 와도 당황하지 않고 침착하게 문제를 해결하는 리더 스타일입니다. 효율적인 동선과 철저한 계획으로 팀을 이끄는 든든한 버팀목이죠.",
+                detail: "힘든 일은 남에게 미루지 않고 가장 먼저 나서서 처리하는 솔선수범형입니다. 감정적인 위로보다는 실질적인 해결책을 제시하는 편이지만, 행동 하나하나에 묻어나는 묵직한 배려가 매력 포인트입니다.",
                 partner: "채지원",
                 color: "bg-blue-50 text-blue-900 border-blue-200",
                 btnColor: "bg-blue-400 hover:bg-blue-500",
                 pointColor: "text-blue-500",
-                img: "💼"
+                img: "💼",
+                profileUrl: ""
             },
             'ESFJ': {
                 name: "니코",
                 title: "준비성 철저한 귀염둥이 🐥",
                 tags: ["#친화력갑", "#보부상", "#메모광", "#해피바이러스", "#인기쟁이", "#공감왕", "#열정만수르", "#사랑둥이"],
-                desc: "여행을 위해 철저하게 공부하고 준비해오는 열정파입니다. 하지만 계획대로 되지 않아도 사람들과 어울리는 것 자체를 즐기는 유연함과 밝은 에너지를 가졌습니다. 처음 보는 사람과도 금방 언니 동생 하며 친해지는 미친 친화력의 소유자로, 어디서나 사랑받는 막내 역할을 톡톡히 합니다.",
+                desc: "여행을 위해 철저하게 공부하고 준비해오는 열정파입니다. 하지만 계획대로 되지 않아도 사람들과 어울리는 것 자체를 즐기는 유연함과 밝은 에너지를 가졌습니다.",
                 detail: "사소한 감정과 풍경 하나하나를 놓치지 않고 기록하며 감탄합니다. 당신의 해맑은 웃음과 리액션은 지친 여행길에 비타민 같은 활력을 불어넣습니다. 주변 사람들을 살뜰히 챙기며 조화로운 분위기를 만드는 데 일등공신입니다.",
                 partner: "심은재",
                 color: "bg-pink-50 text-pink-900 border-pink-200",
                 btnColor: "bg-pink-400 hover:bg-pink-500",
                 pointColor: "text-pink-500",
-                img: "🍭"
+                img: "🍭",
+                profileUrl: ""
             },
             'ESTP': {
                 name: "심은재",
                 title: "어디로 튈지 모르는 분위기 메이커 🔥",
                 tags: ["#입담꾼", "#순발력", "#자유영혼", "#팩폭러", "#인싸", "#모험가", "#유쾌함", "#해결사"],
-                desc: "어색한 침묵은 절대 못 참는 유쾌한 분위기 메이커! 특유의 재치 있는 입담과 순발력으로 어떤 상황에서도 웃음을 만들어내는 인싸 중의 인싸입니다. 복잡하고 골치 아픈 건 딱 질색, 지금 이 순간을 가장 즐겁고 짜릿하게 보내는 것을 추구하는 쿨한 여행자입니다.",
+                desc: "어색한 침묵은 절대 못 참는 유쾌한 분위기 메이커! 특유의 재치 있는 입담과 순발력으로 어떤 상황에서도 웃음을 만들어내는 인싸 중의 인싸입니다.",
                 detail: "눈치가 빨라서 상황 파악이 누구보다 빠릅니다. 장난기 넘쳐 보이지만 결정적인 위기 상황에서는 시원시원하게 해결책을 내놓는 대담함도 갖췄습니다. 형식에 얽매이지 않는 자유로운 여행 스타일로, 당신과 함께라면 지루할 틈이 없습니다.",
                 partner: "한연덕",
                 color: "bg-orange-50 text-orange-900 border-orange-200",
                 btnColor: "bg-orange-400 hover:bg-orange-500",
                 pointColor: "text-orange-500",
-                img: "🕶️"
+                img: "🕶️",
+                profileUrl: ""
             },
             'INTP': {
                 name: "한연덕",
                 title: "무심한 척 다 챙기는 츤데레 😎",
                 tags: ["#마이웨이", "#취향확실", "#시니컬", "#반전매력", "#통찰력", "#효율주의", "#솔직함", "#관찰자"],
-                desc: "매사에 투덜대는 듯 보이지만, 은근히 챙길 건 다 챙기는 츤데레 스타일입니다. 남들의 시선이나 유행보다는 자신의 확고한 취향과 효율성을 1순위로 둡니다. 남들이 보지 못하는 독특한 시각으로 세상을 바라보며, 무심코 던지는 한마디가 핵심을 찌르는 통찰력을 가졌습니다.",
+                desc: "매사에 투덜대는 듯 보이지만, 은근히 챙길 건 다 챙기는 츤데레 스타일입니다. 남들의 시선이나 유행보다는 자신의 확고한 취향과 효율성을 1순위로 둡니다.",
                 detail: "번거롭고 귀찮은 건 딱 질색이지만, 자신이 관심 있는 분야에는 놀라운 집중력과 열정을 보여줍니다. 감정적인 교류보다는 지적인 대화나 독특한 경험을 선호합니다. 겉바속촉 같은 매력으로 알면 알수록 진국인 사람입니다.",
                 partner: "류선우",
                 color: "bg-stone-50 text-stone-900 border-stone-200",
                 btnColor: "bg-stone-500 hover:bg-stone-600",
                 pointColor: "text-stone-600",
-                img: "🎬"
+                img: "🎬",
+                profileUrl: ""
             },
             'INTJ': {
                 name: "류선우",
                 title: "본질을 꿰뚫는 사색가 🧐",
                 tags: ["#지적호기심", "#관찰자", "#철학적", "#깊은내면", "#전략가", "#완벽주의", "#진지함", "#탐구자"],
-                desc: "여행지의 화려한 풍경 이면에 숨겨진 역사와 의미를 탐구하는 지적인 여행자입니다. 왁자지껄한 관광지보다는 깊이 있는 대화를 나누거나 혼자 사색할 수 있는 고즈넉한 장소를 선호합니다. 감정에 쉽게 휩쓸리기보다는 이성적으로 상황을 분석하고 판단하는 냉철함을 지녔습니다.",
+                desc: "여행지의 화려한 풍경 이면에 숨겨진 역사와 의미를 탐구하는 지적인 여행자입니다. 왁자지껄한 관광지보다는 깊이 있는 대화를 나누거나 혼자 사색할 수 있는 고즈넉한 장소를 선호합니다.",
                 detail: "모든 경험에서 배움을 찾으려 하며, 끊임없이 질문을 던집니다. 차가워 보일 수 있지만, 한번 마음을 연 상대에게는 누구보다 깊고 진솔한 관계를 맺습니다. 여행을 통해 단순한 즐거움보다는 내면의 성장을 추구하는 타입입니다.",
                 partner: "심은재",
                 color: "bg-violet-50 text-violet-900 border-violet-200",
                 btnColor: "bg-violet-400 hover:bg-violet-500",
                 pointColor: "text-violet-500",
-                img: "📓"
+                img: "📓",
+                profileUrl: ""
             }
         };
 
@@ -373,12 +358,9 @@
         function Intro({ onStart }) {
             return (
                 <div className="w-full h-full flex flex-col relative overflow-hidden">
-                    {/* Modified to allow scrolling on Intro page for natural feel */}
                     <div className="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar px-6 pt-10 pb-10">
-                        {/* Ticket Container - Taller */}
                         <div className="w-full max-w-[340px] min-h-[520px] bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden transform transition-all hover:scale-[1.01] duration-300 animate-slide-up border border-white/60 flex flex-col shrink-0">
                             
-                            {/* Ticket Header - Light Sky Blue Pastel */}
                             <div className="bg-sky-200 p-5 flex justify-between items-center text-sky-800">
                                 <span className="font-bold tracking-widest text-xs flex items-center gap-2">
                                     <span className="w-2 h-2 rounded-full bg-teal-300 animate-pulse"></span>
@@ -387,11 +369,8 @@
                                 <span className="text-lg rotate-90">✈️</span>
                             </div>
                             
-                            {/* Ticket Body - Centered & Spacious */}
                             <div className="flex-1 p-8 flex flex-col items-center text-center relative">
-                                {/* Left Cutout */}
                                 <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-slate-50/50 rounded-full shadow-inner"></div>
-                                {/* Right Cutout */}
                                 <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-slate-50/50 rounded-full shadow-inner"></div>
 
                                 <div className="mb-4">
@@ -403,7 +382,6 @@
                                     당신 집에서<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-pink-300">잘 수 있나요?</span>
                                 </h1>
                                 
-                                {/* Dashed Line */}
                                 <div className="w-full border-b-2 border-dashed border-sky-100 my-8 relative"></div>
                                 
                                 <div className="flex justify-between w-full text-left mb-10 px-1">
@@ -435,12 +413,10 @@
                             </div>
                         </div>
                         
-                        {/* Footer - No Emoji */}
                         <p className="text-xs text-slate-500 mt-6 font-medium bg-white/40 px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/30 animate-slide-up shrink-0" style={{animationDelay: '0.1s'}}>
                             8명의 여행자가 기다리고 있어요!
                         </p>
 
-                        {/* New Episode Link */}
                         <a
                             href="https://posty.pe/h8qb64"
                             target="_blank"
@@ -459,7 +435,6 @@
             const [selected, setSelected] = useState(null);
             const scrollRef = useRef(null);
 
-            // Scroll to top whenever the question (current index) changes
             useEffect(() => {
                 if (scrollRef.current) {
                     scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
@@ -476,10 +451,8 @@
 
             return (
                 <div className="w-full h-full flex flex-col bg-white/60 relative">
-                    {/* Header */}
                     <div className="px-8 pt-10 pb-6 relative shrink-0">
                         <div className="flex justify-between items-center mb-3">
-                            {/* Back Button */}
                             <button 
                                 onClick={onBack}
                                 className="p-2 -ml-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
@@ -493,7 +466,6 @@
                             </div>
                         </div>
                         
-                        {/* Simple Progress Bar */}
                         <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                             <div 
                                 className="bg-sky-300 h-full rounded-full transition-all duration-500 ease-out" 
@@ -502,10 +474,7 @@
                         </div>
                     </div>
 
-                    {/* Question Content - Added ref for scroll reset */}
                     <div ref={scrollRef} className="flex-1 px-8 flex flex-col pb-16 overflow-y-auto no-scrollbar">
-                        
-                        {/* Question Title Area */}
                         <div className="flex flex-col mb-8 animate-slide-up opacity-0 mt-4" style={{animationDelay: '0.1s'}}>
                             <div className="flex items-baseline gap-5 mb-6">
                                 <span className="text-sky-400 font-extrabold text-3xl italic tracking-tight whitespace-nowrap">Q{data.id}.</span>
@@ -514,7 +483,6 @@
                                 </h2>
                             </div>
                             
-                            {/* Divider */}
                             <div className="w-full border-b-2 border-dashed border-slate-200"></div>
                         </div>
 
@@ -557,14 +525,12 @@
             const resultKey = getResultType(scores);
             const data = resultTypes[resultKey];
 
-            // Add background image style if it exists
             const bgStyle = data.bgImg ? {
                 backgroundImage: `url(${data.bgImg})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
             } : {};
 
-            // 링크 복사 기능
             const handleShare = () => {
                 const dummy = document.createElement("input");
                 document.body.appendChild(dummy);
@@ -577,7 +543,7 @@
 
             return (
                 <div className={`w-full h-full flex flex-col relative overflow-hidden`}>
-                    {/* Background Image Layer (for opacity) */}
+                    {/* Background Image Layer */}
                     {data.bgImg && (
                         <div 
                             className="absolute inset-0 z-0 opacity-30" 
@@ -588,15 +554,32 @@
                     {/* Content Layer */}
                     <div className={`relative z-10 w-full h-full flex flex-col ${data.color} bg-opacity-50`}>
                         <div className="flex-1 overflow-y-auto no-scrollbar p-6 pb-28">
-                            {/* Polaroid Card Style - Added backdrop-blur for better readability over image */}
                             <div className="bg-white/80 backdrop-blur-md rounded-[24px] p-6 shadow-sm border border-white/60 animate-slide-up opacity-0 mt-4" style={{animationDelay: '0.1s'}}>
                                 
-                                {/* Character Title */}
+                                {/* Character Image / Emoji Section - MODIFIED */}
                                 <div className="text-center mb-8 pt-2">
-                                    <div className="inline-block relative">
-                                        <div className="text-7xl mb-4">{data.img}</div>
-                                        {/* Tape decoration */}
-                                        <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-16 h-6 bg-white/40 rotate-[-2deg] border border-white/20 shadow-sm"></div>
+                                    <div className="inline-block relative mb-4">
+                                        {/* profileUrl이 있으면 사진을, 없으면 이모지를 보여줍니다 */}
+                                        {data.profileUrl ? (
+                                            <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg mx-auto bg-gray-100">
+                                                {/* 여기 이미지가 원형으로 꽉 차게 들어갑니다 */}
+                                                <img 
+                                                    src={data.profileUrl} 
+                                                    alt={data.name} 
+                                                    className="w-full h-full object-cover"
+                                                    onError={(e) => {
+                                                        // 이미지 로드 실패 시 이모지로 대체
+                                                        e.target.style.display='none'; 
+                                                        e.target.parentNode.innerHTML = `<div class="text-7xl flex items-center justify-center h-full">${data.img}</div>`;
+                                                    }}
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className="text-7xl">{data.img}</div>
+                                        )}
+                                        
+                                        {/* Tape decoration - 위치 조정됨 */}
+                                        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 w-16 h-6 bg-white/40 rotate-[-2deg] border border-white/20 shadow-sm z-20"></div>
                                     </div>
                                     
                                     <div className={`font-bold ${data.pointColor} mb-2 text-xs tracking-widest uppercase`}>My Travel Persona</div>
@@ -606,7 +589,6 @@
                                     <p className="text-slate-500 text-sm font-medium">{data.title}</p>
                                 </div>
 
-                                {/* Tags */}
                                 <div className="flex flex-wrap justify-center gap-2 mb-8">
                                     {data.tags.map((tag, i) => (
                                         <span key={i} className="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-lg text-xs font-bold text-slate-500">
@@ -615,7 +597,6 @@
                                     ))}
                                 </div>
 
-                                {/* Description - Modified text alignment back to left with tracking-tight */}
                                 <div className="space-y-6 mb-2">
                                     <div>
                                         <h3 className="font-bold text-slate-800 mb-2 text-sm flex items-center gap-2">
@@ -637,7 +618,6 @@
                                 </div>
                             </div>
 
-                            {/* Partner Card - Added backdrop-blur */}
                             <div className="mt-4 bg-white/60 backdrop-blur-sm rounded-[20px] p-5 flex items-center justify-between border border-white/40 shadow-sm animate-slide-up opacity-0" style={{animationDelay: '0.3s'}}>
                                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Best Partner</span>
                                 <span className="text-sm font-extrabold text-slate-800 flex items-center gap-1.5">
@@ -646,7 +626,6 @@
                             </div>
                         </div>
 
-                        {/* Fixed Buttons Area */}
                         <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-white via-white/90 to-transparent pt-12 flex gap-3">
                             <button 
                                 onClick={onRetry}
@@ -715,7 +694,6 @@
                 setCurrentQIndex(prev => prev - 1);
             };
 
-            // New function to go back to Intro (Home)
             const goHome = () => {
                 setStep('intro');
                 setCurrentQIndex(0);
@@ -736,7 +714,6 @@
                         />
                     )}
                     {step === 'loading' && <Loading />}
-                    {/* Pass goHome instead of startTest */}
                     {step === 'result' && <Result scores={scores} onRetry={goHome} />}
                 </>
             );
